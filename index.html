@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recipe Book</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Recipe Book</h1>
+
+    <div class="container">
+
+        <p class="d-inline-flex gap-1">
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
+              Add Recipe
+            </button>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
+                View Recipes
+              </button>
+        </p>
+        
+        <div class="collapse" id="collapseExample1">
+            <div class="card card-body mb-3">
+                <form class="row g-3" id="recipeForm">
+
+                    <div class="col-md-6">
+                        <label for="validationDefault01" class="form-label">State</label>
+                        <select class="form-select" id="validationDefault01" required>
+                            <option selected disabled value="">Choose Meal...</option>
+                            <option value="Breakfast">Breakfast</option>
+                            <option value="Lunch">Lunch</option>
+                            <option value="Dinner">Dinner</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="validationDefault02" class="form-label">By</label>
+                        <select class="form-select" id="validationDefault02" required>
+                            <option selected disabled value="">Author...</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="validationDefault03" class="form-label">Meal Name</label>
+                        <input type="text" class="form-control" id="validationDefault03" required placeholder="Ex. Oats">
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <label for="validationDefault04" class="form-label">Write Ingredients Needed</label>
+                        <input type="form-control" class="form-control" id="validationDefault04" required placeholder="Ex. 1 cup of..">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Write Your Meal Recipe</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="col-12">
+                        <button class="btn btn-primary" type="submit">Submit form</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="collapse" id="collapseExample2">
+            <div class="card card-body" id="viewRecipes">
+                <!-- Submitted recipes will be displayed here -->
+                
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        document.getElementById('recipeForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get form values
+            var mealState = document.getElementById('validationDefault01').value;
+            var adminState = document.getElementById('validationDefault02').value;
+            var mealName = document.getElementById('validationDefault03').value;  
+            var ingdName = document.getElementById('validationDefault04').value;          
+            var recipeText = document.getElementById('exampleFormControlTextarea1').value;
+
+            // Create new recipe element
+            var recipeElement = document.createElement('div');
+            recipeElement.classList.add('mb-2');
+
+            recipeElement.innerHTML = `<div class="accordion accordion-flush" id="accordionFlushExample">
+                                        <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        Check Recipe
+                                        </button>
+                                        </h2>
+                                        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">`
+                                        + `<div class="alert alert-success" role="alert">
+                                        <h4 class="alert-heading">` + mealState + `</h4>` +
+                                        `<h5 class="mb-0"> ` + adminState + ` </h5> <hr>  ` + `<strong>` +
+                                        mealName + `</strong>` + `<p><strong>Ingredients</strong></p><ul><li>` + ingdName +
+                                        `</li></ul>` + `<p><strong>Instructions</strong></p>` + `<ul><li>` + recipeText + `</li></ul>` + `</div></div></div></div></div>`;
+
+            
+
+            // Append new recipe to the view recipes section
+            document.getElementById('viewRecipes').appendChild(recipeElement);
+
+            // Resets form
+            document.getElementById('exampleFormControlTextarea1').value = '';
+            document.getElementById('validationDefault04').selectedIndex = 0;
+        });
+    </script>
+</body>
+</html>
